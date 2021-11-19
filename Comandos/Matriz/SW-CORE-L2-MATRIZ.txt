@@ -1,0 +1,20 @@
+enable
+configure terminal
+hostname SW-CORE-L2
+
+vlan 10
+vlan 20
+vlan 30
+vlan 40
+vlan 50
+vlan 60
+vlan 70
+
+interface range g0/1-2
+ switchport mode trunk
+
+interface range f0/23-24
+ switchport mode trunk
+ exit
+
+end

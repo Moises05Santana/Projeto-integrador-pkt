@@ -1,0 +1,99 @@
+SALA-01
+    en
+    conf t
+    hostname SALA-01
+    VLAN 10
+    NAME SALA-01
+    int r f0/1-24
+    switchport access vlan 10
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+SALA-02:
+    en
+    conf t
+    hostname SALA-02
+    VLAN 20
+    NAME SALA-02
+    int r f0/1-24
+    switchport access vlan 20
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+SALA-03:
+    en
+    conf t
+    hostname SALA-03
+    VLAN 30
+    NAME SALA-03
+    int r f0/1-24
+    switchport access vlan 30
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+SALA-04:
+    en
+    conf t
+    hostname SALA-04
+    VLAN 40
+    NAME SALA-04
+    int r f0/1-24
+    switchport access vlan 40
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+SALA-05:
+    en
+    conf t
+    hostname SALA-05
+    VLAN 50
+    NAME SALA-05
+    int r f0/1-24
+    switchport access vlan 50
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+
+DC:
+    en
+    conf t
+    hostname DATACENTER
+    VLAN 60
+    NAME DATACENTER
+    int r f0/1-24
+    switchport access vlan 60
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
+WIFI:
+    en
+    conf t
+    hostname WIFI
+    VLAN 70
+    NAME WIFI
+    int r f0/1-24
+    switchport access vlan 70
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit
+
+
