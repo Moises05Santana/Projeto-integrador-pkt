@@ -1,24 +1,24 @@
 enable
 configure  terminal
-hostname ISR
+hostname ISR-FILIAL-BKP
 
-ip dhcp excluded-address 172.16.200.1 172.16.200.3
-ip dhcp excluded-address 172.16.110.1 172.16.110.10
-ip dhcp excluded-address 172.16.120.1 172.16.120.10
-ip dhcp excluded-address 172.16.130.1 172.16.130.10
-ip dhcp excluded-address 172.16.140.1 172.16.140.10
+ip dhcp excluded-address 10.16.200.1 10.16.200.3
+ip dhcp excluded-address 10.16.110.1 10.16.110.10
+ip dhcp excluded-address 10.16.120.1 10.16.120.10
+ip dhcp excluded-address 10.16.130.1 10.16.130.10
+ip dhcp excluded-address 10.16.140.1 10.16.140.10
 
 ipv6 unicast-routing
 
 ip dhcp pool VOZ
- network 172.16.200.0 255.255.255.0
- default-router 172.16.200.3
- option 150 ip 172.16.200.3
+ network 10.16.200.0 255.255.255.0
+ default-router 10.16.200.3
+ option 150 ip 10.16.200.3
  exit
 
 ip dhcp pool ADM
- network 172.16.110.0 255.255.255.0
- default-router 172.16.110.3
+ network 10.16.110.0 255.255.255.0
+ default-router 10.16.110.3
  dns-server 192.168.60.250
  exit
 ipv6 dhcp pool ADM
@@ -28,8 +28,8 @@ ipv6 dhcp pool ADM
 
 
 ip dhcp pool DIRETORIA
- network 172.16.120.0 255.255.255.0
- default-router 172.16.120.3
+ network 10.16.120.0 255.255.255.0
+ default-router 10.16.120.3
  dns-server 192.168.60.250
  exit
 ipv6 dhcp pool DIRETORIA
@@ -38,8 +38,8 @@ ipv6 dhcp pool DIRETORIA
  exit
 
 ip dhcp pool ACADEMICO
- network 172.16.130.0 255.255.255.0
- default-router 172.16.130.3
+ network 10.16.130.0 255.255.255.0
+ default-router 10.16.130.3
  dns-server 192.168.60.250
  exit
 ipv6 dhcp pool ACADEMICO
@@ -48,8 +48,8 @@ ipv6 dhcp pool ACADEMICO
  exit
 
 ip dhcp pool RH
- network 172.16.140.0 255.255.255.0
- default-router 172.16.140.3
+ network 10.16.140.0 255.255.255.0
+ default-router 10.16.140.3
  dns-server 192.168.60.250
  exit 
 ipv6 dhcp pool RH
@@ -70,16 +70,6 @@ ipv6 dhcp pool SALA-02
 ipv6 dhcp pool SALA-03
  domain-name site.com
  dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-04
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-05
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
  exit
 
 ipv6 dhcp pool DC
@@ -104,8 +94,8 @@ interface FastEthernet0/1
 
 interface f0/1.10
  encapsulation dot1q 10
- ip add 192.168.10.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:10::1/64
+ ip add 10.168.10.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F10::2/64
  ipv6 add fe80::10 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server SALA-01 
@@ -114,8 +104,8 @@ interface f0/1.10
 
 interface f0/1.20
  encapsulation dot1q 20
- ip add 192.168.20.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:20::1/64
+ ip add 10.168.20.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F20::2/64
  ipv6 add fe80::20 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server SALA-02 
@@ -124,8 +114,8 @@ interface f0/1.20
 
 interface f0/1.30
  encapsulation dot1q 30
- ip add 192.168.30.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:30::1/64
+ ip add 10.168.30.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F30::2/64
  ipv6 add fe80::30 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server SALA-03 
@@ -134,38 +124,19 @@ interface f0/1.30
 
 interface f0/1.40
  encapsulation dot1q 40
- ip add 192.168.40.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:40::1/64
+ ip add 10.168.40.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F40::2/64
  ipv6 add fe80::40 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server SALA-04 
  ipv6 enable
  no sh
 
-interface f0/1.50
- encapsulation dot1q 50
- ip add 192.168.50.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:50::1/64
- ipv6 add fe80::50 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server SALA-05 
- ipv6 enable
- no sh
-
-interface f0/1.60
- encapsulation dot1q 60
- ip add 192.168.60.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:60::1/64
- ipv6 add fe80::60 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server DC 
- ipv6 enable
- no sh
 
 interface f0/1.70
  encapsulation dot1q 70
- ip add 192.168.70.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:70::1/64
+ ip add 10.168.70.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F70::2/64
  ipv6 add fe80::70 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server WIFI
@@ -174,11 +145,9 @@ interface f0/1.70
 
 interface FastEthernet0/0.110
  encapsulation dot1Q 110
- ip address 172.16.110.1 255.255.255.0 
- standby 110 ip 172.16.110.3
- standby 110 preempt
- standby 110 priority 120
- ipv6 add 2001:BEBA:CAFE:110::1/64
+ ip address 10.16.110.1 255.255.255.0 
+ standby 110 ip 10.16.110.3
+ ipv6 add 2001:BEBA:CAFE:F110::1/64
  ipv6 add fe80::110 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server ADM
@@ -187,11 +156,9 @@ interface FastEthernet0/0.110
 
 interface FastEthernet0/0.120
  encapsulation dot1Q 120
- ip address 172.16.120.1 255.255.255.0 
- standby 120 ip 172.16.120.3
- standby 120 preempt
- standby 120 priority 120
- ipv6 add 2001:BEBA:CAFE:120::1/64
+ ip address 10.16.120.1 255.255.255.0 
+ standby 120 ip 10.16.120.3
+ ipv6 add 2001:BEBA:CAFE:F120::1/64
  ipv6 add fe80::120 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server DIRETORIA 
@@ -200,11 +167,9 @@ interface FastEthernet0/0.120
 
 interface FastEthernet0/0.130
  encapsulation dot1Q 130
- ip address 172.16.130.1 255.255.255.0 
- standby 130 ip 172.16.130.3
- standby 130 preempt
- standby 130 priority 120
- ipv6 add 2001:BEBA:CAFE:130::1/64
+ ip address 10.16.130.1 255.255.255.0 
+ standby 130 ip 10.16.130.3
+ ipv6 add 2001:BEBA:CAFE:F130::1/64
  ipv6 add fe80::130 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server ACADEMICO 
@@ -213,11 +178,9 @@ interface FastEthernet0/0.130
 
 interface FastEthernet0/0.140
  encapsulation dot1Q 140
- ip address 172.16.140.1 255.255.255.0 
- standby 140 ip 172.16.140.3
- standby 140 preempt
- standby 140 priority 120
- ipv6 add 2001:BEBA:CAFE:140::1/64
+ ip address 10.16.140.1 255.255.255.0 
+ standby 140 ip 10.16.140.3
+ ipv6 add 2001:BEBA:CAFE:F140::1/64
  ipv6 add fe80::140 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server RH 
@@ -226,26 +189,22 @@ interface FastEthernet0/0.140
 
 interface FastEthernet0/0.200
  encapsulation dot1Q 200
- ip address 172.16.200.1 255.255.255.0 
- standby 200 ip 172.16.200.3
- standby 200 preempt
- standby 200 priority 120
+ ip address 10.16.200.1 255.255.255.0 
+ standby 200 ip 10.16.200.3
  no sh
  exit
 
 interface FastEthernet1/0
- ip add 192.168.80.2 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:80::2/64
+ ip add 192.168.45.2 255.255.255.0
+ ipv6 add 2001:BEBA:CAFE:F45::2/126
  ipv6 enable
  no sh
  exit
 
 interface FastEthernet1/1
- ip add 192.168.0.1 255.255.255.0
- standby 1 ip 192.168.0.3
- standby 1  priority 120
- standby 1 preempt
- ipv6 add 2001:BEBA:CAFE:168::1/126
+ ip add 10.168.0.2 255.255.255.0
+ standby 1 ip 10.168.0.3
+ ipv6 add 2001:BEBA:CAFE:F168::1/126
  ipv6 enable
  no sh
  exit
@@ -253,44 +212,44 @@ interface FastEthernet1/1
 telephony-service
  max-ephones 10
  max-dn 10
- ip source-address 172.16.200.3 port 2000
+ ip source-address 10.16.200.3 port 2000
  auto assign 1 to 10
  exit
 
 ephone-dn 1
- number 1001
+ number 3001
 
 ephone-dn 2
- number 1002
+ number 3002
 
 ephone-dn 3
- number 1003
+ number 3003
 
 ephone-dn 4
- number 1004
+ number 3004
 
 ephone-dn 5
- number 1005
+ number 3005
 
 ephone-dn 6
- number 1006
+ number 3006
 
 ephone-dn 7
- number 1007
+ number 3007
 
 ephone-dn 8
- number 1008
+ number 3008
 
 ephone-dn 9
- number 1009
+ number 3009
 
 ephone-dn 10
- number 1010
+ number 3010
  exit
  
 dial-peer voice 1 voip
-destination-pattern 3...
-session target ipv4:10.16.200.3
+destination-pattern 1...
+session target ipv4:172.16.200.3
 exit
 
 router eigrp 100
@@ -298,6 +257,8 @@ router eigrp 100
  network 188.188.0.0
  network 200.200.200.0
  network 220.220.220.0
+ network 192.168.35.0
+ network 192.168.45.0
  network 192.168.10.0
  network 192.168.20.0
  network 192.168.30.0
@@ -308,6 +269,7 @@ router eigrp 100
  network 192.168.80.0
  network 192.168.90.0
  network 100.0.0.0
+ network 110.0.0.0
  network 10.0.0.0
  network 172.16.0.0
  exit

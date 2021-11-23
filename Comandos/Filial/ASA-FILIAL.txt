@@ -5,45 +5,60 @@ interface GigabitEthernet1/1
  nameif inside
  security-level 100
  ip address 192.168.35.1 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:35::1/126
+ ipv6 add 2001:BEBA:CAFE:F35::1/126
  no sh
 
 interface GigabitEthernet1/2
- nameif outside
- security-level 0
- ip address 100.100.100.1 255.255.255.252
- ipv6 add 2001:BEBA:CAFE:100::1/126
+ nameif interna
+ security-level 100
+ ip address 192.168.45.1 255.255.255.0
+ ipv6 add 2001:BEBA:CAFE:F45::1/126
  no sh
 
 interface GigabitEthernet1/3
- nameif outside2
+ nameif outside
+ security-level 0
+ ip address 100.100.100.1 255.255.255.252
+ ipv6 address 2001:BEBA:CAFE:F100::1/126
+ no sh
+
+ interface GigabitEthernet1/4
+ nameif externa
  security-level 0
  ip address 110.110.110.1 255.255.255.252
- ipv6 address 2001:BEBA:CAFE:110::1/126
+ ipv6 address 2001:BEBA:C0CA:F110::1/126
  no sh
+ exit
 
 object network NET-INSIDE
  subnet 192.168.35.0 255.255.255.0
  nat (inside,outside) dynamic interface
-
+ exit
+ conf t
+ 
 object network NET-INSIDE-2
- subnet 192.168.35.0 255.255.255.0
- nat (inside,outside2) dynamic interface
-
-route outside 0.0.0.0 0.0.0.0 100.100.100.2 1
+ subnet 192.168.45.0 255.255.255.0
+ nat (interna,externa) dynamic interface
+ exit
+ conf t
 
 access-list teste3 extended permit tcp any any
 access-list teste3 extended permit udp any any
 access-list teste3 extended permit ip any any
 
 access-group teste3 in interface inside
+access-group teste3 in interface interna
 access-group teste3 in interface outside
-access-group teste3 in interface outside2
+access-group teste3 in interface externa
 
 router eigrp 100
- network 192.168.35.0
- network 172.16.0.0
  network 177.177.0.0
+ network 188.188.0.0
+ network 200.200.200.0
+ network 220.220.220.0
+ network 100.0.0.0
+ network 110.0.0.0
+ network 192.168.0.0
  network 192.168.10.0
  network 192.168.20.0
  network 192.168.30.0
@@ -52,7 +67,8 @@ router eigrp 100
  network 192.168.60.0
  network 192.168.70.0
  network 192.168.80.0
- network 200.200.200.0
- network 100.0.0.0
+ network 192.168.90.0
+ network 192.168.35.0
  network 10.0.0.0
+ network 172.16.0.0
  exit

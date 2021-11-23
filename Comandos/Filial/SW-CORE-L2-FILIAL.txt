@@ -1,0 +1,18 @@
+enable
+configure terminal
+hostname SW-ADM-L2-FILIAL
+
+vlan 110
+vlan 120
+vlan 130
+vlan 140
+vlan 200
+
+interface range g0/1-2
+ switchport mode trunk
+
+interface range f0/23-24
+ switchport mode trunk
+ exit
+
+end

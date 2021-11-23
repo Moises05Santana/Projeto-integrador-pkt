@@ -1,6 +1,6 @@
 en
 conf t
-hostname CORE-1
+hostname CORE-1-FILIAL
 
 vlan 10
  name SALA-01
@@ -8,10 +8,6 @@ vlan 20
  name SALA-02
 vlan 30
  name SALA-03
-vlan 40
- name SALA-04
-vlan 50
- name SALA-05
 vlan 60
  name DATACENTER
 vlan 70 
@@ -20,65 +16,48 @@ exit
 
 
 interface vlan 10
-ip add 192.168.10.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:10::254/64
+ip add 10.168.10.254 255.255.255.0
+ipv6 add 2001:BEBA:CAFE:F10::254/64
 ipv6 add fe80::10 link-local
-ip helper-address 192.168.60.251
-standby 10 ip 192.168.10.252
+ip helper-address 10.168.60.251
+standby 10 ip 10.168.10.252
 standby 10 priority 120
 standby 10 preempt
 
 interface vlan 20
-ip add 192.168.20.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:20::254/64
+ip add 10.168.20.254 255.255.255.0
+ipv6 add 2001:BEBA:CAFE:F20::254/64
 ipv6 add fe80::20 link-local
-ip helper-address 192.168.60.251
-standby 20 ip 192.168.20.252
+ip helper-address 10.168.60.251
+standby 20 ip 10.168.20.252
 standby 20 priority 120
 standby 20 preempt
 
 interface vlan 30
-ip add 192.168.30.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:30::254/64
+ip add 10.168.30.254 255.255.255.0
+ipv6 add 2001:BEBA:CAFE:F30::254/64
 ipv6 add fe80::30 link-local
-ip helper-address 192.168.60.251
-standby 30 ip 192.168.30.252
+ip helper-address 10.168.60.251
+standby 30 ip 10.168.30.252
 standby 30 priority 120
 standby 30 preempt
 
-interface vlan 40
-ip add 192.168.40.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:40::254/64
-ipv6 add fe80::40 link-local
-ip helper-address 192.168.60.251
-standby 40 ip 192.168.40.252
-standby 40 priority 120
-standby 40 preempt
-
-interface vlan 50
-ip add 192.168.50.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:50::254/64
-ipv6 add fe80::50 link-local
-ip helper-address 192.168.60.251
-standby 50 ip 192.168.50.252
-standby 50 priority 120
-standby 50 preempt
 
 interface vlan 60
-ip add 192.168.60.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:60::254/64
+ip add 10.168.60.254 255.255.255.0
+ipv6 add 2001:BEBA:CAFE:F60::254/64
 ipv6 add fe80::60 link-local
-ip helper-address 192.168.60.251
-standby 60 ip 192.168.60.252
+ip helper-address 10.168.60.251
+standby 60 ip 10.168.60.252
 standby 60 priority 120
 standby 60 preempt
 
 interface vlan 70
-ip add 192.168.70.254 255.255.255.0
-ipv6 add 2001:BEBA:CAFE:70::254/64
+ip add 10.168.70.254 255.255.255.0
+ipv6 add 2001:BEBA:CAFE:F70::254/64
 ipv6 add fe80::70 link-local
-ip helper-address 192.168.60.251
-standby 70 ip 192.168.70.252
+ip helper-address 10.168.60.251
+standby 70 ip 10.168.70.252
 standby 70 priority 120
 standby 70 preempt
 
@@ -94,10 +73,6 @@ int g1/0/2
 switchport access vlan 20
 int g1/0/3
 switchport access vlan 30
-int g1/0/4
-switchport access vlan 40
-int g1/0/5
-switchport access vlan 50
 int g1/0/6
 switchport access vlan 60
 int g1/0/7
@@ -105,7 +80,7 @@ switchport access vlan 70
 exit
 
 
-spanning-tree vlan 10,20,30,40,50,60,70 priority 0
+spanning-tree vlan 10,20,30,60,70 priority 0
 
 int r g1/0/21-22
 switchport trunk encapsulation dot1q

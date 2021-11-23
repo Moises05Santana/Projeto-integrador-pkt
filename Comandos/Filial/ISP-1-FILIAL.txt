@@ -6,7 +6,7 @@ ipv6 unicast-routing
 
 interface FastEthernet0/0
  ip address 100.100.100.2 255.255.255.252
- ipv6 add 2001:BEBA:CAFE:100::1/126
+ ipv6 add 2001:BEBA:CAFE:F100::1/126
  ipv6 add fe80::3 link-local
  ipv6 eigrp 100
  ipv6 enable
@@ -23,11 +23,16 @@ interface Serial0/0/0
  ipv6 eigrp 100
  ipv6 enable
  no sh
+ exit
 
 router eigrp 100
- network 100.0.0.0
- network 200.200.200.0
  network 177.177.0.0
+ network 188.188.0.0
+ network 200.200.200.0
+ network 220.220.220.0
+ network 100.0.0.0
+ network 110.0.0.0
+ network 192.168.0.0
  network 192.168.10.0
  network 192.168.20.0
  network 192.168.30.0
@@ -36,6 +41,8 @@ router eigrp 100
  network 192.168.60.0
  network 192.168.70.0
  network 192.168.80.0
+ network 192.168.90.0
+ network 192.168.35.0
  network 10.0.0.0
  network 172.16.0.0
  exit
@@ -43,5 +50,7 @@ router eigrp 100
 ipv6 router eigrp 100
  eigrp router-id 3.3.3.3
  no sh
- 
+ exit
 
+end
+wr
