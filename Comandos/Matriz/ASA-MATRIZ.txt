@@ -3,32 +3,44 @@ configure terminal
 hostname ASA-MATRIZ
 
 interface GigabitEthernet1/1
+ description PORTA LAN ROUTER ISR-1
  nameif inside
  security-level 100
+ ipv6 enable
  ip address 192.168.80.1 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:80::1/126
+ ipv6 add 2001:BEBA:CAFE:80::1/64
+ ipv6 add FE80::2 LINK-LOCAL 
  no sh
 
 interface GigabitEthernet1/2
+ description PORTA LAN ROUTER ISR-BKP
  nameif interno
  security-level 100
  ip address 192.168.90.1 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:90::1/126
+ ipv6 enable
+ ipv6 add 2001:BEBA:CAFE:90::1/64
+ ipv6 add FE80::2 LINK-LOCAL 
  no sh
 
 
 interface GigabitEthernet1/3
+ description PORTA LAN ROUTER ISP-1
  nameif outside
- security-level 0
+ security-level 100
  ip address 200.200.200.1 255.255.255.252
- ipv6 address 2001:BEBA:CAFE:200::1/126
+ ipv6 enable
+ ipv6 address 2001:BEBA:CAFE:200::1/64
+ ipv6 add FE80::2 LINK-LOCAL 
  no sh
 
 interface GigabitEthernet1/4
+ description PORTA LAN ROUTER ISP-2
  nameif externo
- security-level 0
+ security-level 100
  ip address 220.220.220.1 255.255.255.252
- ipv6 address 2001:BEBA:CAFE:220::1/126
+ ipv6 enable
+ ipv6 address 2001:BEBA:C0CA:220::1/64
+ ipv6 add FE80::2 LINK-LOCAL 
  no sh
 
 object network NET-INSIDE
@@ -54,27 +66,31 @@ access-group teste1 in interface inside
 access-group teste1 in interface interno
 access-group teste1 in interface externo
 
-router eigrp 100
- network 177.177.0.0
- network 188.188.0.0
- network 200.200.200.0
- network 220.220.220.0
- network 100.0.0.0
- network 110.0.0.0
- network 192.168.0.0
- network 192.168.10.0
- network 192.168.20.0
- network 192.168.30.0
- network 192.168.40.0
- network 192.168.50.0
- network 192.168.60.0
- network 192.168.70.0
- network 192.168.80.0
- network 192.168.90.0
- network 192.168.35.0
- network 10.0.0.0
- network 172.16.0.0
- exit
+router ospf 100
+router-id 2.2.2.2
+network 200.200.200.0 255.255.255.252 area 0
+network 220.220.220.0 255.255.255.252 area 0
+network 192.168.80.0 255.255.255.0 area 0
+network 192.168.90.0 255.255.255.0 area 0
+exit
 
+ip router ospf 100
+router-id 2.2.2.2
+
+exit
+
+ipv6 router ospf 100
+router-id 2.2.2.2
+exit
+
+int g1/1
+ipv6 ospf 100 area 0
+int g1/2
+ipv6 ospf 100 area 0
+int g1/3
+ipv6 ospf 100 area 0
+int g1/4
+ipv6 ospf 100 area 0
+exit
 
 end 

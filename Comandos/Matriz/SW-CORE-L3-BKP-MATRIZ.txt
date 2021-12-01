@@ -1,6 +1,9 @@
 en
 conf t
 hostname CORE-BKP
+ip routing
+ipv6 unicast-routing
+
 
 vlan 10
  name SALA-01
@@ -24,6 +27,8 @@ ipv6 add 2001:BEBA:CAFE:10::253/64
 ipv6 add fe80::10 link-local
 ip helper-address 192.168.60.251
 standby 10 ip 192.168.10.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 20
 ip add 192.168.20.253 255.255.255.0
@@ -31,6 +36,8 @@ ipv6 add 2001:BEBA:CAFE:20::253/64
 ipv6 add fe80::20 link-local
 ip helper-address 192.168.60.251
 standby 20 ip 192.168.20.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 30
 ip add 192.168.30.253 255.255.255.0
@@ -38,6 +45,8 @@ ipv6 add 2001:BEBA:CAFE:30::253/64
 ipv6 add fe80::30 link-local
 ip helper-address 192.168.60.251
 standby 30 ip 192.168.30.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 40
 ip add 192.168.40.253 255.255.255.0
@@ -45,6 +54,8 @@ ipv6 add 2001:BEBA:CAFE:40::253/64
 ipv6 add fe80::40 link-local
 ip helper-address 192.168.60.251
 standby 40 ip 192.168.40.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 50
 ip add 192.168.50.253 255.255.255.0
@@ -52,6 +63,8 @@ ipv6 add 2001:BEBA:CAFE:50::253/64
 ipv6 add fe80::50 link-local
 ip helper-address 192.168.60.251
 standby 50 ip 192.168.50.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 60
 ip add 192.168.60.253 255.255.255.0
@@ -59,6 +72,8 @@ ipv6 add 2001:BEBA:CAFE:60::253/64
 ipv6 add fe80::60 link-local
 ip helper-address 192.168.60.251
 standby 60 ip 192.168.60.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
 interface vlan 70
 ip add 192.168.70.253 255.255.255.0
@@ -66,7 +81,12 @@ ipv6 add 2001:BEBA:CAFE:70::253/64
 ipv6 add fe80::70 link-local
 ip helper-address 192.168.60.251
 standby 70 ip 192.168.70.252
+ip ospf 100 area 0
+ipv6 ospf 100 area 0
 
+interface loopback 0
+ip add 3.3.3.4 255.255.255.255
+exit
 
 interface range GigabitEthernet1/0/1-7
 switchport trunk encapsulation dot1q
@@ -102,27 +122,21 @@ switchport mode trunk
 channel-group 1 mode active
 exit
 
-router eigrp 100
- network 177.177.0.0
- network 188.188.0.0
- network 200.200.200.0
- network 220.220.220.0
- network 100.0.0.0
- network 110.0.0.0
- network 192.168.0.0
- network 192.168.10.0
- network 192.168.20.0
- network 192.168.30.0
- network 192.168.40.0
- network 192.168.50.0
- network 192.168.60.0
- network 192.168.70.0
- network 192.168.80.0
- network 192.168.90.0
- network 192.168.35.0
- network 10.0.0.0
- network 172.16.0.0
- exit
+router ospf 100
+router-id 3.3.3.4
+network 192.168.10.0 0.0.0.255 area 0
+network 192.168.20.0 0.0.0.255 area 0
+network 192.168.30.0 0.0.0.255 area 0
+network 192.168.40.0 0.0.0.255 area 0
+network 192.168.50.0 0.0.0.255 area 0
+network 192.168.60.0 0.0.0.255 area 0
+network 192.168.70.0 0.0.0.255 area 0
+exit
+
+ipv6 router ospf 100
+router-id 3.3.3.4
+exit
+
 
 end
 wr

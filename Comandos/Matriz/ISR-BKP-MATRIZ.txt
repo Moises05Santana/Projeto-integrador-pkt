@@ -21,20 +21,11 @@ ip dhcp pool ADM
  default-router 172.16.110.3
  dns-server 192.168.60.250
  exit
-ipv6 dhcp pool ADM
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
- exit
-
 
 ip dhcp pool DIRETORIA
  network 172.16.120.0 255.255.255.0
  default-router 172.16.120.3
  dns-server 192.168.60.250
- exit
-ipv6 dhcp pool DIRETORIA
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
  exit
 
 ip dhcp pool ACADEMICO
@@ -42,134 +33,107 @@ ip dhcp pool ACADEMICO
  default-router 172.16.130.3
  dns-server 192.168.60.250
  exit
-ipv6 dhcp pool ACADEMICO
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
- exit
 
 ip dhcp pool RH
  network 172.16.140.0 255.255.255.0
  default-router 172.16.140.3
  dns-server 192.168.60.250
  exit 
-ipv6 dhcp pool RH
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
- exit
 
-ipv6 dhcp pool SALA-01
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-02
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-03
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-04
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool SALA-05
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
- exit
-
-ipv6 dhcp pool DC
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250
- exit
-
-ipv6 dhcp pool WIFI
+ipv6 dhcp pool IPV6-MATRIZ 
  domain-name site.com
  dns-server 2001:BEBA:CAFE:60::250 
  exit
 
 
 
-interface FastEthernet0/0 
-   standby version 2
+interface range FastEthernet0/0-1 
  no sh
 
-interface FastEthernet0/1
-  standby version 2
- no sh
+
 
 interface f0/1.10
  encapsulation dot1q 10
  ip add 192.168.10.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:10::2/64
- ipv6 add fe80::10 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server SALA-01 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.20
  encapsulation dot1q 20
  ip add 192.168.20.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:20::2/64
- ipv6 add fe80::20 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag 
- ipv6 dhcp server SALA-02 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.30
  encapsulation dot1q 30
  ip add 192.168.30.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:30::2/64
- ipv6 add fe80::30 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag 
- ipv6 dhcp server SALA-03 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.40
  encapsulation dot1q 40
  ip add 192.168.40.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:40::2/64
- ipv6 add fe80::40 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server SALA-04 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.50
  encapsulation dot1q 50
  ip add 192.168.50.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:50::2/64
- ipv6 add fe80::50 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server SALA-05 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.60
  encapsulation dot1q 60
  ip add 192.168.60.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:60::2/64
- ipv6 add fe80::60 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server DC 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface f0/1.70
  encapsulation dot1q 70
  ip add 192.168.70.2 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:70::2/64
- ipv6 add fe80::70 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag 
- ipv6 dhcp server WIFI
+ ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface FastEthernet0/0.110
@@ -177,10 +141,12 @@ interface FastEthernet0/0.110
  ip address 172.16.110.2 255.255.255.0 
  standby 110 ip 172.16.110.3
  ipv6 add 2001:BEBA:CAFE:110::2/64
- ipv6 add fe80::110 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag 
- ipv6 dhcp server ADM
+ ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface FastEthernet0/0.120
@@ -188,10 +154,12 @@ interface FastEthernet0/0.120
  ip address 172.16.120.2 255.255.255.0 
  standby 120 ip 172.16.120.3
  ipv6 add 2001:BEBA:CAFE:120::2/64
- ipv6 add fe80::120 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server DIRETORIA 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface FastEthernet0/0.130
@@ -199,10 +167,12 @@ interface FastEthernet0/0.130
  ip address 172.16.130.2 255.255.255.0 
  standby 130 ip 172.16.130.3
  ipv6 add 2001:BEBA:CAFE:130::2/64
- ipv6 add fe80::130 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server ACADEMICO 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface FastEthernet0/0.140
@@ -210,34 +180,50 @@ interface FastEthernet0/0.140
  ip address 172.16.140.2 255.255.255.0 
  standby 140 ip 172.16.140.3
  ipv6 add 2001:BEBA:CAFE:140::2/64
- ipv6 add fe80::140 link-local
+ ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag
- ipv6 dhcp server RH 
+ ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
  no sh
 
 interface FastEthernet0/0.200
  encapsulation dot1Q 200
  ip address 172.16.200.2 255.255.255.0 
  standby 200 ip 172.16.200.3
+ ip ospf 100 area 0
+ ipv6 dhcp server IPV6-MATRIZ  
  no sh
  exit
 
 
 interface FastEthernet1/0
  ip add 192.168.90.2 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:90::2/126
  ipv6 enable
+ ipv6 add 2001:BEBA:CAFE:90::2/64
+ ipv6 add FE80::3 LINK-LOCAL
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 dhcp server IPV6-MATRIZ  
  no sh
  exit
 
 interface FastEthernet1/1
  ip add 192.168.0.2 255.255.255.0
  standby 1 ip 192.168.0.3 
- ipv6 add 2001:BEBA:CAFE:168::2/126
  ipv6 enable
+ ipv6 add 2001:BEBA:CAFE:168::2/64
+ ipv6 add FE80::3 LINK-LOCAL
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 dhcp server IPV6-MATRIZ  
  no sh
  exit
+
+interface loopback 0
+ip add 3.3.3.3 255.255.255.255
+exit
 
 
 
@@ -284,27 +270,30 @@ destination-pattern 3...
 session target ipv4:10.16.200.3
 exit
 
-router eigrp 100
- network 177.177.0.0
- network 188.188.0.0
- network 200.200.200.0
- network 220.220.220.0
- network 100.0.0.0
- network 110.0.0.0
- network 192.168.0.0
- network 192.168.10.0
- network 192.168.20.0
- network 192.168.30.0
- network 192.168.40.0
- network 192.168.50.0
- network 192.168.60.0
- network 192.168.70.0
- network 192.168.80.0
- network 192.168.90.0
- network 192.168.35.0
- network 10.0.0.0
- network 172.16.0.0
- exit
+router ospf 100
+router-id 3.3.3.3
+network 192.168.90.0 0.0.0.255 area 0
+network 192.168.0.0 0.0.0.255 area 0
+network 192.168.10.0 0.0.0.255 area 0
+network 192.168.20.0 0.0.0.255 area 0
+network 192.168.30.0 0.0.0.255 area 0
+network 192.168.40.0 0.0.0.255 area 0
+network 192.168.50.0 0.0.0.255 area 0
+network 192.168.60.0 0.0.0.255 area 0
+network 192.168.70.0 0.0.0.255 area 0
+network 172.16.110.0 0.0.0.255 area 0
+network 172.16.120.0 0.0.0.255 area 0
+network 172.16.130.0 0.0.0.255 area 0
+network 172.16.140.0 0.0.0.255 area 0
+network 172.16.200.0 0.0.0.255 area 0
+
+exit
+
+ipv6 router ospf 100
+router-id 3.3.3.3
+exit
+
+
 
 end
 wr
