@@ -222,7 +222,7 @@ interface FastEthernet1/1
  exit
 
 interface loopback 0
-ip add 3.3.3.3 255.255.255.255
+ip add 3.3.3.2 255.255.255.255
 exit
 
 
@@ -271,7 +271,7 @@ session target ipv4:10.16.200.3
 exit
 
 router ospf 100
-router-id 3.3.3.3
+router-id 3.3.3.2
 network 192.168.90.0 0.0.0.255 area 0
 network 192.168.0.0 0.0.0.255 area 0
 network 192.168.10.0 0.0.0.255 area 0
@@ -290,7 +290,7 @@ network 172.16.200.0 0.0.0.255 area 0
 exit
 
 ipv6 router ospf 100
-router-id 3.3.3.3
+router-id 3.3.3.2
 exit
 
 

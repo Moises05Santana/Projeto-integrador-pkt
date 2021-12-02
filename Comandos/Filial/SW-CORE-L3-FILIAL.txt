@@ -2,6 +2,9 @@ en
 conf t
 hostname CORE-1-FILIAL
 
+ip routing
+ipv6 unicast-routing
+
 vlan 10
  name SALA-01
 vlan 20
@@ -18,7 +21,7 @@ exit
 interface vlan 10
 ip add 10.168.10.254 255.255.255.0
 ipv6 add 2001:BEBA:CAFE:F10::254/64
-ipv6 add fe80::10 link-local
+ipv6 add fe80::64 link-local
 ip helper-address 10.168.60.251
 standby 10 ip 10.168.10.252
 standby 10 priority 120
@@ -29,7 +32,7 @@ ipv6 ospf 100 area 0
 interface vlan 20
 ip add 10.168.20.254 255.255.255.0
 ipv6 add 2001:BEBA:CAFE:F20::254/64
-ipv6 add fe80::20 link-local
+ipv6 add fe80::64 link-local
 ip helper-address 10.168.60.251
 standby 20 ip 10.168.20.252
 standby 20 priority 120
@@ -40,7 +43,7 @@ ipv6 ospf 100 area 0
 interface vlan 30
 ip add 10.168.30.254 255.255.255.0
 ipv6 add 2001:BEBA:CAFE:F30::254/64
-ipv6 add fe80::30 link-local
+ipv6 add fe80::64 link-local
 ip helper-address 10.168.60.251
 standby 30 ip 10.168.30.252
 standby 30 priority 120
@@ -52,7 +55,7 @@ ipv6 ospf 100 area 0
 interface vlan 60
 ip add 10.168.60.254 255.255.255.0
 ipv6 add 2001:BEBA:CAFE:F60::254/64
-ipv6 add fe80::60 link-local
+ipv6 add fe80::64 link-local
 ip helper-address 10.168.60.251
 standby 60 ip 10.168.60.252
 standby 60 priority 120
@@ -63,7 +66,7 @@ ipv6 ospf 100 area 0
 interface vlan 70
 ip add 10.168.70.254 255.255.255.0
 ipv6 add 2001:BEBA:CAFE:F70::254/64
-ipv6 add fe80::70 link-local
+ipv6 add fe80::64 link-local
 ip helper-address 10.168.60.251
 standby 70 ip 10.168.70.252
 standby 70 priority 120

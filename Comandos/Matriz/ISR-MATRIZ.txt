@@ -304,8 +304,5 @@ router-id 3.3.3.3
 exit
 
 
-
-
-
 end
 wr

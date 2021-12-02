@@ -9,6 +9,8 @@ interface FastEthernet0/0
  ipv6 enable
  ipv6 address 2001:BEBA:C0CA:220::2/64
  ipv6 add fe80::12 link-local
+ ip ospf 100 area 0
+ ipv6 ospf 100 area 0
  no sh
 
 interface Serial0/0/0
@@ -21,6 +23,8 @@ interface Serial0/0/0
  frame-relay map ip 188.188.188.2 102
  ip ospf 100 area 0
  ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 ospf 100 area 0
  no sh
  exit
 
@@ -30,25 +34,12 @@ exit
 
 router ospf 100 
 router-id 1.1.1.2 
+network 220.220.220.0 0.0.0.3 area 0
+network 188.188.188.0 0.0.0.3 area 0
 exit
 
 ipv6 router ospf 100
 router-id 1.1.1.2 
-network 220.220.220.0 0.0.0.3 area 0
-network 188.188.188.0 0.0.0.3 area 0
-ex
-exit
-
-int f0/0
-ip ospf 100 area 0
-ipv6 ospf 100 area 0
-
-int f0/1
-ip ospf 100 area 0
-
-int s0/0/0
-ip ospf 100 area 0
-ipv6 ospf 100 area 0
 exit
 
 end 

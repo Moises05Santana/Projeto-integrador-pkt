@@ -9,7 +9,8 @@ interface GigabitEthernet1/1
  ipv6 enable
  ip address 192.168.80.1 255.255.255.0
  ipv6 add 2001:BEBA:CAFE:80::1/64
- ipv6 add FE80::2 LINK-LOCAL 
+ ipv6 add FE80::2 LINK-LOCAL
+ ipv6 ospf 100 area 0 
  no sh
 
 interface GigabitEthernet1/2
@@ -20,6 +21,7 @@ interface GigabitEthernet1/2
  ipv6 enable
  ipv6 add 2001:BEBA:CAFE:90::1/64
  ipv6 add FE80::2 LINK-LOCAL 
+ ipv6 ospf 100 area 0
  no sh
 
 
@@ -31,6 +33,7 @@ interface GigabitEthernet1/3
  ipv6 enable
  ipv6 address 2001:BEBA:CAFE:200::1/64
  ipv6 add FE80::2 LINK-LOCAL 
+ ipv6 ospf 100 area 0
  no sh
 
 interface GigabitEthernet1/4
@@ -41,6 +44,7 @@ interface GigabitEthernet1/4
  ipv6 enable
  ipv6 address 2001:BEBA:C0CA:220::1/64
  ipv6 add FE80::2 LINK-LOCAL 
+ ipv6 ospf 100 area 0
  no sh
 
 object network NET-INSIDE
@@ -57,14 +61,14 @@ object network NET-INSIDE-2
 exit
 conf t
 
-access-list teste1 extended permit tcp any any
-access-list teste1 extended permit udp any any
-access-list teste1 extended permit ip any any
+access-list lista-asa extended permit tcp any any
+access-list lista-asa extended permit udp any any
+access-list lista-asa extended permit ip any any
 
-access-group teste1 in interface outside
-access-group teste1 in interface inside
-access-group teste1 in interface interno
-access-group teste1 in interface externo
+access-group lista-asa in interface outside
+access-group lista-asa in interface inside
+access-group lista-asa in interface interno
+access-group lista-asa in interface externo
 
 router ospf 100
 router-id 2.2.2.2
@@ -74,23 +78,35 @@ network 192.168.80.0 255.255.255.0 area 0
 network 192.168.90.0 255.255.255.0 area 0
 exit
 
-ip router ospf 100
-router-id 2.2.2.2
-
-exit
-
 ipv6 router ospf 100
 router-id 2.2.2.2
 exit
 
-int g1/1
-ipv6 ospf 100 area 0
-int g1/2
-ipv6 ospf 100 area 0
-int g1/3
-ipv6 ospf 100 area 0
-int g1/4
-ipv6 ospf 100 area 0
-exit
+ webvpn
+ enable outside
+ exit
 
+ group-policy Politica1 internal
+ group-policy Politica1 attributes
+ vpn-tunnel-protocol ssl-clientless
+ webvpn
+ url-list value SITE
+ exit
+ exit
+
+ username cisco password cisco
+ username cisco attributes
+ vpn-group-policy Politica1
+ exit
+
+ username eduardo password eduardo
+ username eduardo attributes
+ vpn-group-policy Politica1
+ exit
+
+ tunnel-group acesso1 type remote-access
+ tunnel-group acesso1 general-attributes
+ default-group-policy Politica1
+
+ 
 end 

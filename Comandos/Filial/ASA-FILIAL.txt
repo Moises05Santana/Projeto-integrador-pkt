@@ -50,17 +50,21 @@ object network NET-INSIDE-2
  exit
  conf t
 
-access-list teste3 extended permit tcp any any
-access-list teste3 extended permit udp any any
-access-list teste3 extended permit ip any any
+access-list LISTA-ASA extended permit tcp any any
+access-list LISTA-ASA extended permit udp any any
+access-list LISTA-ASA extended permit ip any any
 
-access-group teste3 in interface inside
-access-group teste3 in interface interna
-access-group teste3 in interface outside
-access-group teste3 in interface externa
+access-group LISTA-ASA in interface inside
+access-group LISTA-ASA in interface interna
+access-group LISTA-ASA in interface outside
+access-group LISTA-ASA in interface externa
 
 router ospf 100
 router-id 5.5.5.5
+network 100.100.100.0 255.255.255.252 area 0
+network 110.110.110.0 255.255.255.252 area 0
+network 192.168.35.0 255.255.255.0 area 0
+network 192.168.45.0 255.255.255.0 area 0
 exit
 
 ipv6 router ospf 100

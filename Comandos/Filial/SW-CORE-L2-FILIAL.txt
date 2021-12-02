@@ -1,12 +1,12 @@
 enable
 configure terminal
-hostname SW-ADM-L2-FILIAL
+hostname SW-CORE-L2-FILIAL
 
-vlan 110
-vlan 120
-vlan 130
-vlan 140
-vlan 200
+vlan 10
+vlan 20
+vlan 30
+vlan 60
+vlan 70
 
 interface range g0/1-2
  switchport mode trunk
