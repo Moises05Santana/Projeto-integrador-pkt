@@ -4,9 +4,44 @@ hostname ISR-BKP-MATRIZ
 
 ip dhcp excluded-address 172.16.200.1 172.16.200.3
 ip dhcp excluded-address 172.16.110.1 172.16.110.10
-ip dhcp excluded-address 172.16.120.1 172.16.120.10
-ip dhcp excluded-address 172.16.130.1 172.16.130.10
-ip dhcp excluded-address 172.16.140.1 172.16.140.10
+
+loggin on
+loggin host 192.168.60.250
+loggin trap debugging
+login on-success log
+login on-failure log
+loggin userinfo
+
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret 123
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+exit
+ip domain-name site.com
+crypto key generate rsa
+yes
+!
+1024
+!
+line vty 0 4
+login local
+exit
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+exit
 
 ipv6 unicast-routing
 
@@ -21,24 +56,6 @@ ip dhcp pool ADM
  default-router 172.16.110.3
  dns-server 192.168.60.250
  exit
-
-ip dhcp pool DIRETORIA
- network 172.16.120.0 255.255.255.0
- default-router 172.16.120.3
- dns-server 192.168.60.250
- exit
-
-ip dhcp pool ACADEMICO
- network 172.16.130.0 255.255.255.0
- default-router 172.16.130.3
- dns-server 192.168.60.250
- exit
-
-ip dhcp pool RH
- network 172.16.140.0 255.255.255.0
- default-router 172.16.140.3
- dns-server 192.168.60.250
- exit 
 
 ipv6 dhcp pool IPV6-MATRIZ 
  domain-name site.com
@@ -72,7 +89,7 @@ interface f0/1.20
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
- ipv6 ospf 100 area 0
+  ipv6 ospf 100 area 0
  ip ospf 100 area 0
  no sh
 
@@ -136,6 +153,18 @@ interface f0/1.70
  ip ospf 100 area 0
  no sh
 
+interface f0/1.99
+ encapsulation dot1q 99
+ ip add 192.168.99.2 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:99::2/64
+ ipv6 add fe80::3 link-local
+ ipv6 nd other-config-flag 
+ ipv6 dhcp server IPV6-MATRIZ
+ ipv6 enable
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ no sh
+
 interface FastEthernet0/0.110
  encapsulation dot1Q 110
  ip address 172.16.110.2 255.255.255.0 
@@ -144,45 +173,6 @@ interface FastEthernet0/0.110
  ipv6 add fe80::3 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface FastEthernet0/0.120
- encapsulation dot1Q 120
- ip address 172.16.120.2 255.255.255.0 
- standby 120 ip 172.16.120.3
- ipv6 add 2001:BEBA:CAFE:120::2/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ  
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface FastEthernet0/0.130
- encapsulation dot1Q 130
- ip address 172.16.130.2 255.255.255.0 
- standby 130 ip 172.16.130.3
- ipv6 add 2001:BEBA:CAFE:130::2/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ  
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface FastEthernet0/0.140
- encapsulation dot1Q 140
- ip address 172.16.140.2 255.255.255.0 
- standby 140 ip 172.16.140.3
- ipv6 add 2001:BEBA:CAFE:140::2/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ  
  ipv6 enable
  ipv6 ospf 100 area 0
  ip ospf 100 area 0
@@ -202,7 +192,7 @@ interface FastEthernet1/0
  ip add 192.168.90.2 255.255.255.0
  ipv6 enable
  ipv6 add 2001:BEBA:CAFE:90::2/64
- ipv6 add FE80::3 LINK-LOCAL
+ ipv6 add fe80::3 LINK-LOCAL
  ipv6 ospf 100 area 0
  ip ospf 100 area 0
  ipv6 dhcp server IPV6-MATRIZ  
@@ -214,7 +204,7 @@ interface FastEthernet1/1
  standby 1 ip 192.168.0.3 
  ipv6 enable
  ipv6 add 2001:BEBA:CAFE:168::2/64
- ipv6 add FE80::3 LINK-LOCAL
+ ipv6 add fe80::3 LINK-LOCAL
  ipv6 ospf 100 area 0
  ip ospf 100 area 0
  ipv6 dhcp server IPV6-MATRIZ  
@@ -260,7 +250,7 @@ ephone-dn 8
 
 ephone-dn 9
  number 1009
- 
+
 ephone-dn 10
  number 1010
  exit
@@ -281,16 +271,15 @@ network 192.168.40.0 0.0.0.255 area 0
 network 192.168.50.0 0.0.0.255 area 0
 network 192.168.60.0 0.0.0.255 area 0
 network 192.168.70.0 0.0.0.255 area 0
+network 192.168.99.0 0.0.0.255 area 0
 network 172.16.110.0 0.0.0.255 area 0
-network 172.16.120.0 0.0.0.255 area 0
-network 172.16.130.0 0.0.0.255 area 0
-network 172.16.140.0 0.0.0.255 area 0
 network 172.16.200.0 0.0.0.255 area 0
-
+no log
 exit
 
 ipv6 router ospf 100
 router-id 3.3.3.2
+no log
 exit
 
 

@@ -97,3 +97,16 @@ WIFI:
     exit
 
 
+
+SUPORTE:
+    en
+    conf t
+    hostname SUPORTE
+    VLAN 99
+    NAME WIFI
+    int r f0/1-24
+    switchport access vlan 99
+    switchport mode access
+    int r g0/1-2
+    switchport mode trunk
+    exit

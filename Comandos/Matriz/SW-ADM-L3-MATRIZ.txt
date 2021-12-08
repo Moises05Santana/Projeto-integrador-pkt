@@ -3,33 +3,56 @@ conf t
 hostname SW-ADM
 vlan 110
 name ADM
-vlan 120
-name DIRETORIA
-vlan 130
-name ACADEMICO
-vlan 140
-name RH
 vlan 200
 name VOZ
 exit
 
+banner motd ##
+
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret 123
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+
+ip domain-name site.com
+crypto key generate rsa
+!
+1024
+!
+line vty 0 4
+login local
+exit
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+exit
+
+loggin on
+loggin host 192.168.60.250
+loggin trap debugging
+
+login on-success log
+login on-failure log
+
+loggin userinfo
+
  
 int range f0/1-24
+switchport access vlan 110
 switchport voice vlan 200
 switchport mode access
-
-int range f0/1-6
-switchport access vlan 110
-
-int range f0/7-12
-switchport access vlan 120
-
-int range f0/13-18
-switchport access vlan 130
-
-int range f0/19-24
-switchport access vlan 140
-exit
 
 int r g 0/1-2
 switchport trunk encapsulation dot1q

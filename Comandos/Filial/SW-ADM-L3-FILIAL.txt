@@ -3,33 +3,15 @@ conf t
 hostname SW-ADM-FILIAL
 vlan 110
 name ADM
-vlan 120
-name DIRETORIA
-vlan 130
-name ACADEMICO
-vlan 140
-name RH
 vlan 200
 name VOZ
 exit
 
  
 int range f0/1-24
+switchport access vlan 110
 switchport voice vlan 200
 switchport mode access
-
-int range f0/1-6
-switchport access vlan 110
-
-int range f0/7-12
-switchport access vlan 120
-
-int range f0/13-18
-switchport access vlan 130
-
-int range f0/19-24
-switchport access vlan 140
-exit
 
 int r g 0/1-2
 switchport trunk encapsulation dot1q

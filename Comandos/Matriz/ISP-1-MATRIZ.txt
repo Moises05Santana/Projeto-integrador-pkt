@@ -4,6 +4,24 @@ hostname ISP-MATRIZ-1
  
 ipv6 unicast-routing
 
+
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret 123
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+
+
 interface f0/0
  description porta interna
  ip address 200.200.200.2 255.255.255.252

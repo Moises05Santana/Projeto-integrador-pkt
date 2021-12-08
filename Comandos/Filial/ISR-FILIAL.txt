@@ -4,9 +4,7 @@ hostname ISR-FILIAL
 
 ip dhcp excluded-address 10.16.200.1 10.16.200.3
 ip dhcp excluded-address 10.16.110.1 10.16.110.10
-ip dhcp excluded-address 10.16.120.1 10.16.120.10
-ip dhcp excluded-address 10.16.130.1 10.16.130.10
-ip dhcp excluded-address 10.16.140.1 10.16.140.10
+
 
 ipv6 unicast-routing
 
@@ -22,30 +20,10 @@ ip dhcp pool ADM
  dns-server 192.168.60.250
  exit
 
-ip dhcp pool DIRETORIA
- network 10.16.120.0 255.255.255.0
- default-router 10.16.120.3
- dns-server 192.168.60.250
- exit
-
-ip dhcp pool ACADEMICO
- network 10.16.130.0 255.255.255.0
- default-router 10.16.130.3
- dns-server 192.168.60.250
- exit
-
-ip dhcp pool RH
- network 10.16.140.0 255.255.255.0
- default-router 10.16.140.3
- dns-server 192.168.60.250
- exit 
-
-
 ipv6 dhcp pool IPV6-FILIAL
  domain-name site.com
  dns-server 2001:BEBA:CAFE:60::250 
  exit
-
 
 
 interface range f0/0-1
@@ -88,6 +66,30 @@ interface f0/1.30
  ipv6 enable
  no sh
 
+interface f0/1.40
+ encapsulation dot1q 40
+ ip add 10.168.40.1 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F40::1/64
+ ipv6 add fe80::6 link-local
+ ipv6 nd other-config-flag 
+ ipv6 dhcp server IPV6-FILIAL
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 enable
+ no sh
+
+ interface f0/1.50
+ encapsulation dot1q 50
+ ip add 10.168.50.1 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F50::1/64
+ ipv6 add fe80::6 link-local
+ ipv6 nd other-config-flag 
+ ipv6 dhcp server IPV6-FILIAL
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 enable
+ no sh
+
 interface f0/1.60
  encapsulation dot1q 60
  ip add 10.168.60.1 255.255.255.0 
@@ -113,6 +115,18 @@ interface f0/1.70
  ipv6 enable
  no sh
 
+interface f0/1.99
+ encapsulation dot1q 99
+ ip add 10.168.99.1 255.255.255.0 
+ ipv6 add 2001:BEBA:CAFE:F99::1/64
+ ipv6 add fe80::6 link-local
+ ipv6 nd other-config-flag 
+ ipv6 dhcp server IPV6-FILIAL
+ ipv6 ospf 100 area 0
+ ip ospf 100 area 0
+ ipv6 enable
+ no sh
+
 interface FastEthernet0/0.110
  encapsulation dot1Q 110
  ip address 10.16.110.1 255.255.255.0 
@@ -128,50 +142,6 @@ interface FastEthernet0/0.110
  ipv6 enable
  no sh
 
-interface FastEthernet0/0.120
- encapsulation dot1Q 120
- ip address 10.16.120.1 255.255.255.0 
- standby 120 ip 10.16.120.3
- standby 120 preempt
- standby 120 priority 120
- ipv6 add 2001:BEBA:CAFE:F120::1/64
- ipv6 add fe80::6 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-FILIAL
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- ipv6 enable
- no sh
-
-interface FastEthernet0/0.130
- encapsulation dot1Q 130
- ip address 10.16.130.1 255.255.255.0 
- standby 130 ip 10.16.130.3
- standby 130 preempt
- standby 130 priority 120
- ipv6 add 2001:BEBA:CAFE:F130::1/64
- ipv6 add fe80::6 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-FILIAL
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- ipv6 enable
- no sh
-
-interface FastEthernet0/0.140
- encapsulation dot1Q 140
- ip address 10.16.140.1 255.255.255.0 
- standby 140 ip 10.16.140.3
- standby 140 preempt
- standby 140 priority 120
- ipv6 add 2001:BEBA:CAFE:F140::1/64
- ipv6 add fe80::6 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-FILIAL
- ipv6 ospf 100 area 0
- ip ospf 100 area 0 
- ipv6 enable
- no sh
 
 interface FastEthernet0/0.200
  encapsulation dot1Q 200
@@ -261,15 +231,15 @@ router-id 6.6.6.6
 network 192.168.35.0 0.0.0.255 area 0
 network 10.168.0.0 0.0.0.255 area 0
 network 10.16.110.0 0.0.0.255 area 0
-network 10.16.120.0 0.0.0.255 area 0
-network 10.16.130.0 0.0.0.255 area 0
-network 10.16.140.0 0.0.0.255 area 0
 network 10.16.200.0 0.0.0.255 area 0
 network 10.168.10.0 0.0.0.255 area 0
 network 10.168.20.0 0.0.0.255 area 0
 network 10.168.30.0 0.0.0.255 area 0
+network 10.168.40.0 0.0.0.255 area 0
+network 10.168.50.0 0.0.0.255 area 0
 network 10.168.60.0 0.0.0.255 area 0
 network 10.168.70.0 0.0.0.255 area 0
+network 10.168.99.0 0.0.0.255 area 0
 exit
 
 ipv6 router ospf 100

@@ -4,6 +4,22 @@ enable
 
 ipv6 unicast-routing 
 
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret admin
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+
 interface FastEthernet0/0
  ip address 110.110.110.2 255.255.255.252
  ipv6 enable

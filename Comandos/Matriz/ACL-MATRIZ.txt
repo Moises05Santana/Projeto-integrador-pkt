@@ -1,292 +1,4 @@
-enable
-configure  terminal
-hostname ISR
-
-ip dhcp excluded-address 172.16.200.1 172.16.200.3
-ip dhcp excluded-address 172.16.110.1 172.16.110.10
-
-ipv6 unicast-routing
-
-loggin on
-loggin host 192.168.60.250
-loggin trap debugging
-login on-success log
-login on-failure log
-loggin userinfo
-
-service password-encryption
-service timestamps log datetime msec
-
-no ip domain-lookup
-
-enable secret 123
-username admin secret 123
-username suporte password 123
-username adm privilege 15 secret 123
-
-line console 0
-login local
-password 123
-logging synchronous
-exec-timeout 5 30
-
-ip domain-name site.com
-crypto key generate rsa
-!
-yes
-!
-1024
-!
-line vty 0 4
-login local
-exit
-ip ssh version 2
-line vty 0 4
-login local
-transport input ssh
-exit
-
-ip dhcp pool VOZ
- network 172.16.200.0 255.255.255.0
- default-router 172.16.200.3
- option 150 ip 172.16.200.3
- exit
-
-ip dhcp pool ADM
- network 172.16.110.0 255.255.255.0
- default-router 172.16.110.3
- dns-server 192.168.60.250
- exit
-
-ipv6 dhcp pool IPV6-MATRIZ
- domain-name site.com
- dns-server 2001:BEBA:CAFE:60::250 
- exit
-
-
-
-interface range FastEthernet0/0-1 
- no sh
-
-
-
-interface f0/1.10
- encapsulation dot1q 10
- ip add 192.168.10.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:10::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.20
- encapsulation dot1q 20
- ip add 192.168.20.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:20::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag 
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.30
- encapsulation dot1q 30
- ip add 192.168.30.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:30::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag 
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
-  ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.40
- encapsulation dot1q 40
- ip add 192.168.40.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:40::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.50
- encapsulation dot1q 50
- ip add 192.168.50.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:50::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.60
- encapsulation dot1q 60
- ip add 192.168.60.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:60::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
-  ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.70
- encapsulation dot1q 70
- ip add 192.168.70.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:70::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag 
- ipv6 dhcp server IPV6-MATRIZ
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface f0/1.99
- encapsulation dot1q 99
- ip add 192.168.99.1 255.255.255.0 
- ipv6 add 2001:BEBA:CAFE:99::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag 
- ipv6 dhcp server IPV6-MATRIZ
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-interface FastEthernet0/0.110
- encapsulation dot1Q 110
- ip address 172.16.110.1 255.255.255.0 
- standby 110 ip 172.16.110.3
- standby 110 preempt
- standby 110 priority 120
- ipv6 add 2001:BEBA:CAFE:110::1/64
- ipv6 add fe80::3 link-local
- ipv6 nd other-config-flag 
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
-
-
-
-interface FastEthernet0/0.200
- encapsulation dot1Q 200
- ip address 172.16.200.1 255.255.255.0 
- standby 200 ip 172.16.200.3
- standby 200 preempt
- standby 200 priority 120
- ip ospf 100 area 0
- ipv6 dhcp server IPV6-MATRIZ 
- no sh
- exit
-
-interface FastEthernet1/0
- ip add 192.168.80.2 255.255.255.0
- ipv6 add 2001:BEBA:CAFE:80::2/64
- ipv6 add FE80::3 LINK-LOCAL
- ipv6 enable
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- ipv6 dhcp server IPV6-MATRIZ 
- no sh
- exit
-
-interface FastEthernet1/1
- ip add 192.168.0.1 255.255.255.0
- standby 1 ip 192.168.0.3
- standby 1  priority 120
- standby 1 preempt
- ipv6 enable
- ipv6 add 2001:BEBA:CAFE:168::1/64
- ipv6 add FE80::3 LINK-LOCAL
- ipv6 dhcp server IPV6-MATRIZ 
- ipv6 ospf 100 area 0
- ip ospf 100 area 0
- no sh
- exit
-
-interface loopback 0
-ip add 3.3.3.3 255.255.255.255
-exit
-
-telephony-service
- max-ephones 10
- max-dn 10
- ip source-address 172.16.200.3 port 2000
- auto assign 1 to 10
- exit
-
-ephone-dn 1
- number 1001
-
-ephone-dn 2
- number 1002
-
-ephone-dn 3
- number 1003
-
-ephone-dn 4
- number 1004
-
-ephone-dn 5
- number 1005
-
-ephone-dn 6
- number 1006
-
-ephone-dn 7
- number 1007
-
-ephone-dn 8
- number 1008
-
-ephone-dn 9
- number 1009
-
-ephone-dn 10
- number 1010
- exit
-
-dial-peer voice 1 voip
-destination-pattern 3...
-session target ipv4:10.16.200.3
-exit
-
-router ospf 100
-router-id 3.3.3.3
-network 192.168.80.0 0.0.0.255 area 0
-network 192.168.0.0 0.0.0.255 area 0
-network 192.168.10.0 0.0.0.255 area 0
-network 192.168.20.0 0.0.0.255 area 0
-network 192.168.30.0 0.0.0.255 area 0
-network 192.168.40.0 0.0.0.255 area 0
-network 192.168.50.0 0.0.0.255 area 0
-network 192.168.60.0 0.0.0.255 area 0
-network 192.168.70.0 0.0.0.255 area 0
-network 192.168.99.0 0.0.0.255 area 0
-network 172.16.110.0 0.0.0.255 area 0
-network 172.16.200.0 0.0.0.255 area 0
-
-exit
-
-ipv6 router ospf 100
-router-id 3.3.3.3
-exit
-
+!LISTA DE ACESSO IPV6
 
  ipv6 access-list SALA-01
  permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:60::250
@@ -467,12 +179,35 @@ int f0/0.110
   exit  
 
 
+ip access-list extended ADM
+permit ip 172.16.110.0 0.0.0.255 host 172.16.110.1
+permit ip 172.16.110.0 0.0.0.255 host 172.16.110.2
+permit ip 172.16.110.0 0.0.0.255 host 172.16.110.3
+permit ip 172.16.110.0 0.0.0.255 host 192.168.60.250
+permit ip 172.16.110.0 0.0.0.255 172.16.200.0 0.0.0.255
+permit ip 172.16.110.0 0.0.0.255 10.16.110.0 0.0.0.255
+permit ip 172.16.110.0 0.0.0.255 10.16.200.0 0.0.0.255
+deny ip 172.16.110.0 0.0.0.255 192.168.10.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.20.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.30.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.40.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.50.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.60.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.70.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 192.168.99.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.10.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.20.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.30.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.40.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.50.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.60.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.70.0 0.0.0.255 
+deny ip 172.16.110.0 0.0.0.255 10.168.99.0 0.0.0.255 
+permit ip any any
+ex
+int F0/0.110
+ip access-group ADM in
+ex
 
 
 
-
-
-
-
-end
-wr

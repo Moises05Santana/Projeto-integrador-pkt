@@ -9,6 +9,7 @@ vlan 40
 vlan 50
 vlan 60
 vlan 70
+vlan 99
 
 interface range g0/1-2
  switchport mode trunk

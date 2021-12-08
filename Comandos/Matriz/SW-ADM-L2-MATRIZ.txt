@@ -3,9 +3,6 @@ configure terminal
 hostname SW-ADM-L2
 
 vlan 110
-vlan 120
-vlan 130
-vlan 140
 vlan 200
 
 interface range g0/1-2
