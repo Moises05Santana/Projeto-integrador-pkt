@@ -7,7 +7,16 @@ vlan 200
 name VOZ
 exit
 
-banner motd ##
+banner motd #
+
+          _____  _____    ___   ___ ___  __ 
+    /\   |  __ \|  __ \  |__ \ / _ \__ \/_ |
+   /  \  | |__) | |__) |    ) | | | | ) || |
+  / /\ \ |  ___/|  _  /    / /| | | |/ / | |
+ / ____ \| |    | | \ \   / /_| |_| / /_ | |
+/_/    \_\_|    |_|  \_\ |____|\___/____||_|
+                                            
+#
 
 service password-encryption
 service timestamps log datetime msec
@@ -24,19 +33,6 @@ login local
 password 123
 logging synchronous
 exec-timeout 5 30
-
-ip domain-name site.com
-crypto key generate rsa
-!
-1024
-!
-line vty 0 4
-login local
-exit
-ip ssh version 2
-line vty 0 4
-login local
-transport input ssh
 exit
 
 loggin on

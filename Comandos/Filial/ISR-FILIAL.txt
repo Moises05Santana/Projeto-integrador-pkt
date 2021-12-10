@@ -8,6 +8,17 @@ ip dhcp excluded-address 10.16.110.1 10.16.110.10
 
 ipv6 unicast-routing
 
+banner motd #
+
+          _____  _____    ___   ___ ___  __ 
+    /\   |  __ \|  __ \  |__ \ / _ \__ \/_ |
+   /  \  | |__) | |__) |    ) | | | | ) || |
+  / /\ \ |  ___/|  _  /    / /| | | |/ / | |
+ / ____ \| |    | | \ \   / /_| |_| / /_ | |
+/_/    \_\_|    |_|  \_\ |____|\___/____||_|
+                                            
+#
+
 ip dhcp pool VOZ
  network 10.16.200.0 255.255.255.0
  default-router 10.16.200.3
@@ -34,7 +45,7 @@ interface f0/1.10
  encapsulation dot1q 10
  ip add 10.168.10.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F10::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::11 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -46,7 +57,7 @@ interface f0/1.20
  encapsulation dot1q 20
  ip add 10.168.20.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F20::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::21 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -58,7 +69,7 @@ interface f0/1.30
  encapsulation dot1q 30
  ip add 10.168.30.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F30::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::31 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -70,7 +81,7 @@ interface f0/1.40
  encapsulation dot1q 40
  ip add 10.168.40.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F40::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::41 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -82,7 +93,7 @@ interface f0/1.40
  encapsulation dot1q 50
  ip add 10.168.50.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F50::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::51 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -94,7 +105,7 @@ interface f0/1.60
  encapsulation dot1q 60
  ip add 10.168.60.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F60::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::61 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -107,7 +118,7 @@ interface f0/1.70
  encapsulation dot1q 70
  ip add 10.168.70.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F70::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::71 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -119,7 +130,7 @@ interface f0/1.99
  encapsulation dot1q 99
  ip add 10.168.99.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:F99::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::91 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -134,7 +145,7 @@ interface FastEthernet0/0.110
  standby 110 preempt
  standby 110 priority 120
  ipv6 add 2001:BEBA:CAFE:F110::1/64
- ipv6 add fe80::6 link-local
+ ipv6 add fe80::111 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-FILIAL
  ipv6 ospf 100 area 0
@@ -157,7 +168,7 @@ interface FastEthernet1/0
  ip add 192.168.35.2 255.255.255.0
  ipv6 enable
  ipv6 add 2001:BEBA:CAFE:F35::2/64
- ipv6 add FE80::6 LINK-LOCAL
+ ipv6 add FE80::35 LINK-LOCAL
  ip ospf 100 area 0
  ipv6 ospf 100 area 0
  no sh
@@ -169,7 +180,7 @@ interface FastEthernet1/1
  standby 1 priority 120
  standby 1 preempt
  ipv6 add 2001:BEBA:CAFE:F168::1/64
- ipv6 add FE80::6 LINK-LOCAL
+ ipv6 add FE80::F168 LINK-LOCAL
  ipv6 enable
  ip ospf 100 area 0
  ipv6 ospf 100 area 0
@@ -245,6 +256,43 @@ exit
 ipv6 router ospf 100
 router-id 6.6.6.6
 exit
+
+
+! ACL IPV4 FILIAL
+
+ip access-list extended ADM-FILIAL
+  permit ip 10.16.110.0 0.0.0.255 host 192.168.60.250
+  permit ip 10.16.110.0 0.0.0.255 host 10.16.110.1
+  permit ip 10.16.110.0 0.0.0.255 host 10.16.110.2
+  permit ip 10.16.110.0 0.0.0.255 host 10.16.110.3
+  permit ip 10.16.110.0 0.0.0.255 10.16.200.0 0.0.0.255
+  permit ip 10.16.110.0 0.0.0.255 172.168.110.0 0.0.0.255
+  permit ip 10.16.110.0 0.0.0.255 172.168.200.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.10.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.20.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.30.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.40.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.50.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.60.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.70.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 10.168.99.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.10.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.20.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.30.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.40.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.50.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.60.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.70.0 0.0.0.255
+  deny ip 10.16.110.0 0.0.0.255 192.168.99.0 0.0.0.255
+  permit ip any any
+ex
+int F0/0.110
+ip access-group ADM-FILIAL in
+ex
+
+
+
+
 
 
 end

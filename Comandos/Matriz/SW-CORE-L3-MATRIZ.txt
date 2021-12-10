@@ -22,7 +22,17 @@ vlan 99
  name SUPORTE
 exit
 
-banner motd ##
+banner motd #
+
+          _____  _____    ___   ___ ___  __ 
+    /\   |  __ \|  __ \  |__ \ / _ \__ \/_ |
+   /  \  | |__) | |__) |    ) | | | | ) || |
+  / /\ \ |  ___/|  _  /    / /| | | |/ / | |
+ / ____ \| |    | | \ \   / /_| |_| / /_ | |
+/_/    \_\_|    |_|  \_\ |____|\___/____||_|
+                                            
+#
+
 
 loggin on
 loggin host 192.168.60.250
@@ -51,6 +61,8 @@ exec-timeout 5 30
 
 ip domain-name site.com
 crypto key generate rsa
+!
+yes
 !
 1024
 !
@@ -160,17 +172,17 @@ switchport trunk encapsulation dot1q
 switchport mode trunk
 
 int g1/0/1
-switchport access vlan 10
+ switchport access vlan 10
 int g1/0/2
-switchport access vlan 20
+ switchport access vlan 20
 int g1/0/3
-switchport access vlan 30
+ switchport access vlan 30
 int g1/0/4
-switchport access vlan 40
+ switchport access vlan 40
 int g1/0/5
-switchport access vlan 50
+ switchport access vlan 50
 int g1/0/6
-switchport access vlan 60
+ switchport access vlan 60
 int g1/0/7
 switchport access vlan 70
 exit

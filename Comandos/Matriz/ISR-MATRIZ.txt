@@ -7,6 +7,18 @@ ip dhcp excluded-address 172.16.110.1 172.16.110.10
 
 ipv6 unicast-routing
 
+banner motd #
+
+          _____  _____    ___   ___ ___  __ 
+    /\   |  __ \|  __ \  |__ \ / _ \__ \/_ |
+   /  \  | |__) | |__) |    ) | | | | ) || |
+  / /\ \ |  ___/|  _  /    / /| | | |/ / | |
+ / ____ \| |    | | \ \   / /_| |_| / /_ | |
+/_/    \_\_|    |_|  \_\ |____|\___/____||_|
+                                            
+#
+
+
 loggin on
 loggin host 192.168.60.250
 loggin trap debugging
@@ -74,7 +86,7 @@ interface f0/1.10
  encapsulation dot1q 10
  ip add 192.168.10.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:10::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::10 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -86,7 +98,7 @@ interface f0/1.20
  encapsulation dot1q 20
  ip add 192.168.20.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:20::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::20 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -98,7 +110,7 @@ interface f0/1.30
  encapsulation dot1q 30
  ip add 192.168.30.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:30::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::30 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -110,7 +122,7 @@ interface f0/1.40
  encapsulation dot1q 40
  ip add 192.168.40.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:40::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::40 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -122,7 +134,7 @@ interface f0/1.50
  encapsulation dot1q 50
  ip add 192.168.50.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:50::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::50 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -134,7 +146,7 @@ interface f0/1.60
  encapsulation dot1q 60
  ip add 192.168.60.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:60::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::60 link-local
  ipv6 nd other-config-flag
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -146,7 +158,7 @@ interface f0/1.70
  encapsulation dot1q 70
  ip add 192.168.70.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:70::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::70 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ
  ipv6 enable
@@ -158,7 +170,7 @@ interface f0/1.99
  encapsulation dot1q 99
  ip add 192.168.99.1 255.255.255.0 
  ipv6 add 2001:BEBA:CAFE:99::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::99 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ
  ipv6 enable
@@ -173,7 +185,7 @@ interface FastEthernet0/0.110
  standby 110 preempt
  standby 110 priority 120
  ipv6 add 2001:BEBA:CAFE:110::1/64
- ipv6 add fe80::3 link-local
+ ipv6 add fe80::110 link-local
  ipv6 nd other-config-flag 
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 enable
@@ -197,7 +209,7 @@ interface FastEthernet0/0.200
 interface FastEthernet1/0
  ip add 192.168.80.2 255.255.255.0
  ipv6 add 2001:BEBA:CAFE:80::2/64
- ipv6 add FE80::3 LINK-LOCAL
+ ipv6 add FE80::80 LINK-LOCAL
  ipv6 enable
  ipv6 ospf 100 area 0
  ip ospf 100 area 0
@@ -212,7 +224,7 @@ interface FastEthernet1/1
  standby 1 preempt
  ipv6 enable
  ipv6 add 2001:BEBA:CAFE:168::1/64
- ipv6 add FE80::3 LINK-LOCAL
+ ipv6 add FE80::168 LINK-LOCAL
  ipv6 dhcp server IPV6-MATRIZ 
  ipv6 ospf 100 area 0
  ip ospf 100 area 0
@@ -288,189 +300,37 @@ router-id 3.3.3.3
 exit
 
 
- ipv6 access-list SALA-01
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:10::1
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:10::2
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:10::254
- permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:10::253
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:70::/64
- permit ipv6 any any
- exit
-int f0/1.10
-  ipv6 traffic-filter SALA-01 in
+!LISTA DE ACESSO IPV4
 
-
-
-ipv6 access-list SALA-02
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:20::1
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:20::2
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:20::254
- permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:20::253
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:70::/64
- permit ipv6 any any
- exit
-int f0/1.20
-  ipv6 traffic-filter SALA-02 in
-
-
-
-ipv6 access-list SALA-03
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:30::1
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:30::2
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:30::254
- permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:30::253
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:70::/64
- permit ipv6 any any
- exit
-int f0/1.30
-  ipv6 traffic-filter SALA-03 in
-
-
-
-ipv6 access-list SALA-04
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:40::1
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:40::2
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:40::254
- permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:40::253
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:70::/64
- permit ipv6 any any
- exit
-int f0/1.40
-  ipv6 traffic-filter SALA-04 in
-
-
-
- ipv6 access-list SALA-05
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:50::1
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:50::2
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:50::254
- permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:50::253
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:70::/64
- permit ipv6 any any
- exit
-int f0/1.40
-  ipv6 traffic-filter SALA-05 in
-
-
-
-
-
- ipv6 access-list WIFI
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:70::1
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:70::2
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:70::254
- permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:70::253
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:99::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:60::/64
- permit ipv6 any any
- exit
-int f0/1.70
-  ipv6 traffic-filter WIFI in 
-
-
-
-
-
- ipv6 access-list SUPORTE
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:99::1
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:99::2
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:99::254
- permit ipv6 2001:BEBA:CAFE:99::/64 host 2001:BEBA:CAFE:99::253
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:110::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:70::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:60::/64
- permit ipv6 any any
- exit
-int f0/1.99
-  ipv6 traffic-filter SUPORTE in
-
-
-
-ipv6 access-list ADM
- permit ipv6 2001:BEBA:CAFE:110::/64 host 2001:BEBA:CAFE:60::250
- permit ipv6 2001:BEBA:CAFE:110::/64 host 2001:BEBA:CAFE:60::254
- permit ipv6 2001:BEBA:CAFE:110::/64 host 2001:BEBA:CAFE:110::1
- permit ipv6 2001:BEBA:CAFE:110::/64 host 2001:BEBA:CAFE:110::2
- permit ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:F110::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:10::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:20::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:30::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:40::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:50::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:60::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:70::/64
- deny ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:99::/64
- permit ipv6 any any
- exit
-int f0/0.110
-  ipv6 traffic-filter ADM in 
-  exit  
-
-
-
-
-
-
+ip access-list extended ADM-IPV4
+  permit ip 172.16.110.0 0.0.0.255 host 172.16.110.1
+  permit ip 172.16.110.0 0.0.0.255 host 172.16.110.2
+  permit ip 172.16.110.0 0.0.0.255 host 172.16.110.3
+  permit ip 172.16.110.0 0.0.0.255 host 192.168.60.250
+  permit ip 172.16.110.0 0.0.0.255 172.16.200.0 0.0.0.255
+  permit ip 172.16.110.0 0.0.0.255 10.16.110.0 0.0.0.255
+  permit ip 172.16.110.0 0.0.0.255 10.16.200.0 0.0.0.255
+  deny ip 172.16.110.0 0.0.0.255 192.168.10.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.20.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.30.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.40.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.50.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.60.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.70.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 192.168.99.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.10.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.20.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.30.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.40.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.50.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.60.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.70.0 0.0.0.255 
+  deny ip 172.16.110.0 0.0.0.255 10.168.99.0 0.0.0.255 
+  permit ip any any
+  ex
+int F0/0.110
+ip access-group ADM-IPV4 in
+ex
 
 
 
