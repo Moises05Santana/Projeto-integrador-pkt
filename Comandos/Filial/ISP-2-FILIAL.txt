@@ -4,6 +4,15 @@ enable
 
 ipv6 unicast-routing 
 
+banner motd #
+ _____  _____ _____    ___    ______ _____ _      _____          _      
+|_   _|/ ____|  __ \  |__ \  |  ____|_   _| |    |_   _|   /\   | |     
+  | | | (___ | |__) |    ) | | |__    | | | |      | |    /  \  | |     
+  | |  \___ \|  ___/    / /  |  __|   | | | |      | |   / /\ \ | |     
+ _| |_ ____) | |       / /_  | |     _| |_| |____ _| |_ / ____ \| |____ 
+|_____|_____/|_|      |____| |_|    |_____|______|_____/_/    \_\______|
+#
+
 service password-encryption
 service timestamps log datetime msec
 
@@ -37,7 +46,8 @@ interface Serial0/0/0
  frame-relay map ipv6 2001:BEBA:C0CA:188::1 202 broadcast
  frame-relay map ipv6 fe80::12 202 broadcast
  frame-relay map ip 188.188.188.1 202
- ipv6 enable
+ ip ospf network broadcast
+ ipv6 ospf network broadcast
  ip ospf 100 area 0
  ipv6 ospf 100 area 0
  no sh

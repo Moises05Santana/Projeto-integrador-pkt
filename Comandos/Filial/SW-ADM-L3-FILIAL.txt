@@ -17,6 +17,24 @@ banner motd #
 /_/    \_\_|    |_|  \_\ |____|\___/____||_|
                                             
 #
+
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret 123
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+exit
+
  
 int range f0/1-24
 switchport access vlan 110

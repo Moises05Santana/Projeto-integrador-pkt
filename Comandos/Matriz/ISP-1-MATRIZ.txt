@@ -4,6 +4,14 @@ hostname ISP-MATRIZ-1
  
 ipv6 unicast-routing
 
+banner motd #
+ _____  _____ _____    __   __  __       _______ _____  _____ ______
+|_   _|/ ____|  __ \  /_ | |  \/  |   /\|__   __|  __ \|_   _|___  /
+  | | | (___ | |__) |  | | | \  / |  /  \  | |  | |__) | | |    / / 
+  | |  \___ \|  ___/   | | | |\/| | / /\ \ | |  |  _  /  | |   / /  
+ _| |_ ____) | |       | | | |  | |/ ____ \| |  | | \ \ _| |_ / /__ 
+|_____|_____/|_|       |_| |_|  |_/_/    \_\_|  |_|  \_\_____/_____|
+#
 
 service password-encryption
 service timestamps log datetime msec
@@ -28,17 +36,10 @@ interface f0/0
  ipv6 address 2001:BEBA:CAFE:200::2/64
  ipv6 add fe80::1 link-local
  ipv6 enable
+ ip ospf 100 area 0
+ ipv6 ospf 100 area 0
  no sh
 
- interface f0/1
- description porta google
- ip address 215.215.215.2 255.255.255.252
- no sh
-
- interface g0/2/0
- description porta google
- ip address 215.215.215.5 255.255.255.252
- no sh
 
 interface Serial0/0/0
  description porta MATRIZ-FILIAL
@@ -49,6 +50,10 @@ interface Serial0/0/0
  frame-relay map ipv6 2001:BEBA:CAFE:177::2 101 broadcast
  frame-relay map ipv6 fe80::4 101 broadcast
  frame-relay map ip 177.177.177.2 101
+ ip ospf network broadcast
+ ipv6 ospf network broadcast
+ ip ospf 100 area 0
+ ipv6 ospf 100 area 0
  ipv6 enable
  no sh
 
@@ -67,16 +72,7 @@ ipv6 router ospf 100
 router-id 1.1.1.1
 exit
 
-int f0/0
-ip ospf 100 area 0
-ipv6 ospf 100 area 0
 
-int f0/1
-ip ospf 100 area 0
-
-int s0/0/0
-ip ospf 100 area 0
-ipv6 ospf 100 area 0
 exit
 
 end 

@@ -292,11 +292,12 @@ network 192.168.70.0 0.0.0.255 area 0
 network 192.168.99.0 0.0.0.255 area 0
 network 172.16.110.0 0.0.0.255 area 0
 network 172.16.200.0 0.0.0.255 area 0
-
+no log
 exit
 
 ipv6 router ospf 100
 router-id 3.3.3.3
+no log
 exit
 
 
@@ -333,6 +334,97 @@ ip access-group ADM-IPV4 in
 ex
 
 
+!ACL-IPV6
+
+ipv6 access-list ipv6-sala01-matriz
+    permit ipv6 2001:BEBA:CAFE:10::/64 2001:BEBA:CAFE:10::/64
+    permit ipv6 2001:BEBA:CAFE:10::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.10
+  ipv6 traffic-filter ipv6-sala01-matriz in
+  exi    
+
+ipv6 access-list ipv6-sala02-matriz
+    permit ipv6 2001:BEBA:CAFE:20::/64 2001:BEBA:CAFE:20::/64
+    permit ipv6 2001:BEBA:CAFE:20::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.20
+  ipv6 traffic-filter ipv6-sala02-matriz in
+  exi 
+
+ipv6 access-list ipv6-sala03-matriz
+    permit ipv6 2001:BEBA:CAFE:30::/64 2001:BEBA:CAFE:30::/64
+    permit ipv6 2001:BEBA:CAFE:30::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.30
+  ipv6 traffic-filter ipv6-sala03-matriz in
+  exi     
+
+ipv6 access-list ipv6-sala04-matriz
+    permit ipv6 2001:BEBA:CAFE:40::/64 2001:BEBA:CAFE:40::/64
+    permit ipv6 2001:BEBA:CAFE:40::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.40
+  ipv6 traffic-filter ipv6-sala04-matriz in
+  exi 
+
+ipv6 access-list ipv6-sala05-matriz
+    permit ipv6 2001:BEBA:CAFE:50::/64 2001:BEBA:CAFE:50::/64
+    permit ipv6 2001:BEBA:CAFE:50::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.50
+  ipv6 traffic-filter ipv6-sala05-matriz in
+  exi     
+
+ipv6 access-list ipv6-wifi-matriz
+    permit ipv6 2001:BEBA:CAFE:70::/64 2001:BEBA:CAFE:70::/64
+    permit ipv6 2001:BEBA:CAFE:70::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.70
+  ipv6 traffic-filter ipv6-wifi-matriz in
+  exi     
+
+ipv6 access-list ipv6-suporte-matriz
+    permit ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:99::/64
+    permit ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:F99::/64
+    permit ipv6 2001:BEBA:CAFE:99::/64 2001:BEBA:CAFE:60::/64
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.99
+  ipv6 traffic-filter ipv6-suporte-matriz in
+  exi         
+
+ipv6 access-list ipv6-adm-matriz
+    permit ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:110::/64
+    permit ipv6 2001:BEBA:CAFE:110::/64 2001:BEBA:CAFE:F110::/64
+    permit ipv6 2001:BEBA:CAFE:110::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/0.110
+  ipv6 traffic-filter ipv6-adm-matriz in
+  exi       
 
 end
 wr

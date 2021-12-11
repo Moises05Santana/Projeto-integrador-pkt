@@ -1,112 +1,85 @@
 SALA-01
-    en
-    conf t
-    hostname SALA-01
-    VLAN 10
-    NAME SALA-01
-    int r f0/1-24
-    switchport access vlan 10
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
+ en
+ conf t
+ hostname SW-SUPORTE
+ service password-encryption
+ service timestamps log datetime msec
+ no ip domain-lookup
+ enable secret 123
+ username admin secret 123
+ username suporte password 123
+ username adm privilege 15 secret 123
+ VLAN 99
+ NAME SUPORTE
+ int r f0/1-24
+ switchport access vlan 99
+ switchport mode access
+ int r g0/1-2
+ switchport mode trunk
+ exit
+ end
+ wr
+
+SALA-02
+ en
+ conf t
+ hostname SALA-01
+
+ service password-encryption
+ service timestamps log datetime msec
+ no ip domain-lookup
+ enable secret 123
+ username admin secret 123
+ username suporte password 123
+ username adm privilege 15 secret 123
+
+ VLAN 10
+ NAME SALA-01
+ int r f0/1-24
+ switchport access vlan 10
+ switchport mode access
+ int r g0/1-2
+ switchport mode trunk
+ exit
+ end
+ wr
+
+SUPORTE
+ en
+ conf t
+ hostname SUPORTE
 
 
-SALA-02:
-    en
-    conf t
-    hostname SALA-02
-    VLAN 20
-    NAME SALA-02
-    int r f0/1-24
-    switchport access vlan 20
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
+banner motd #
 
+          _____  _____    ___   ___ ___  __ 
+    /\   |  __ \|  __ \  |__ \ / _ \__ \/_ |
+   /  \  | |__) | |__) |    ) | | | | ) || |
+  / /\ \ |  ___/|  _  /    / /| | | |/ / | |
+ / ____ \| |    | | \ \   / /_| |_| / /_ | |
+/_/    \_\_|    |_|  \_\ |____|\___/____||_|
 
-SALA-03:
-    en
-    conf t
-    hostname SALA-03
-    VLAN 30
-    NAME SALA-03
-    int r f0/1-24
-    switchport access vlan 30
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
+AVISO: accesso somente para administradores de rede                                            
+#
 
-
-SALA-04:
-    en
-    conf t
-    hostname SALA-04
-    VLAN 40
-    NAME SALA-04
-    int r f0/1-24
-    switchport access vlan 40
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
-
-
-SALA-05:
-    en
-    conf t
-    hostname SALA-05
-    VLAN 50
-    NAME SALA-05
-    int r f0/1-24
-    switchport access vlan 50
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
-
-
-
-DC:
-    en
-    conf t
-    hostname DATACENTER
-    VLAN 60
-    NAME DATACENTER
-    int r f0/1-24
-    switchport access vlan 60
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
-
-
-WIFI:
-    en
-    conf t
-    hostname WIFI
-    VLAN 70
-    NAME WIFI
-    int r f0/1-24
-    switchport access vlan 70
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
+ service password-encryption
+ service timestamps log datetime msec
+ no ip domain-lookup
+ enable secret 123
+ username admin secret 123
+ username suporte password 123
+ username adm privilege 15 secret 123
+ VLAN 99
+ NAME SUPORTE
+ int r f0/1-24
+ switchport access vlan 99
+ switchport mode access
+ int r g0/1-2
+ switchport mode trunk
+ exit
+ end
+ wr
 
 
 
-SUPORTE:
-    en
-    conf t
-    hostname SUPORTE
-    VLAN 99
-    NAME WIFI
-    int r f0/1-24
-    switchport access vlan 99
-    switchport mode access
-    int r g0/1-2
-    switchport mode trunk
-    exit
+ 

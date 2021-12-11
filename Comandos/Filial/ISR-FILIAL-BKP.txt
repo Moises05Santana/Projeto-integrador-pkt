@@ -18,6 +18,37 @@ banner motd #
 /_/    \_\_|    |_|  \_\ |____|\___/____||_|
                                             
 #
+service password-encryption
+service timestamps log datetime msec
+
+no ip domain-lookup
+
+enable secret 123
+username admin secret 123
+username suporte password 123
+username adm privilege 15 secret 123
+
+line console 0
+login local
+password 123
+logging synchronous
+exec-timeout 5 30
+
+ip domain-name site.com
+crypto key generate rsa
+!
+yes
+!
+1024
+!
+line vty 0 4
+login local
+exit
+ip ssh version 2
+line vty 0 4
+login local
+transport input ssh
+exit
 
 ip dhcp pool VOZ
  network 10.16.200.0 255.255.255.0
@@ -246,14 +277,16 @@ network 10.168.50.0 0.0.0.255 area 0
 network 10.168.60.0 0.0.0.255 area 0
 network 10.168.70.0 0.0.0.255 area 0
 network 10.168.99.0 0.0.0.255 area 0
+no log
 exit
 
 
 ipv6 router ospf 100
 router-id 6.6.6.2
+no log
 exit
 
-! ACL IPV4 FILIAL
+!ACL IPV4 FILIAL
 
 ip access-list extended ADM-FILIAL
   permit ip 10.16.110.0 0.0.0.255 host 192.168.60.250
@@ -285,8 +318,101 @@ int F0/0.110
 ip access-group ADM-FILIAL in
 ex
 
+!ACL IPV6 FILIAL
 
 
+ipv6 access-list ipv6-sala01-filial
+    permit ipv6 2001:BEBA:CAFE:F10::/64 2001:BEBA:CAFE:F10::/64
+    permit ipv6 2001:BEBA:CAFE:F10::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.10
+  ipv6 traffic-filter ipv6-sala01-filial in
+  exi  
+
+ipv6 access-list ipv6-sala02-filial
+    permit ipv6 2001:BEBA:CAFE:F20::/64 2001:BEBA:CAFE:F20::/64
+    permit ipv6 2001:BEBA:CAFE:F20::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.20
+  ipv6 traffic-filter ipv6-sala02-filial in
+  exi    
+
+ipv6 access-list ipv6-sala03-filial
+    permit ipv6 2001:BEBA:CAFE:F30::/64 2001:BEBA:CAFE:F30::/64
+    permit ipv6 2001:BEBA:CAFE:F30::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.30
+  ipv6 traffic-filter ipv6-sala01-filial in
+  exi  
+
+ipv6 access-list ipv6-sala04-filial
+    permit ipv6 2001:BEBA:CAFE:F40::/64 2001:BEBA:CAFE:F40::/64
+    permit ipv6 2001:BEBA:CAFE:F40::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.40
+  ipv6 traffic-filter ipv6-sala04-filial in
+  exi  
+
+ipv6 access-list ipv6-sala05-filial
+    permit ipv6 2001:BEBA:CAFE:F50::/64 2001:BEBA:CAFE:F50::/64
+    permit ipv6 2001:BEBA:CAFE:F50::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.50
+  ipv6 traffic-filter ipv6-sala05-filial in
+  exi      
+
+
+ipv6 access-list ipv6-wifi-filial
+    permit ipv6 2001:BEBA:CAFE:F70::/64 2001:BEBA:CAFE:F70::/64
+    permit ipv6 2001:BEBA:CAFE:F70::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.70
+  ipv6 traffic-filter ipv6-wifi-filial in
+  exi  
+
+
+ipv6 access-list ipv6-suporte-filial
+    permit ipv6 2001:BEBA:CAFE:F99::/64 2001:BEBA:CAFE:F99::/64
+    permit ipv6 2001:BEBA:CAFE:F99::/64 2001:BEBA:CAFE:99::/64
+    permit ipv6 2001:BEBA:CAFE:F99::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/1.99
+  ipv6 traffic-filter ipv6-suporte-filial in
+  exi    
+
+
+ipv6 access-list ipv6-adm-filial
+    permit ipv6 2001:BEBA:CAFE:F110::/64 2001:BEBA:CAFE:F110::/64
+    permit ipv6 2001:BEBA:CAFE:F110::/64 2001:BEBA:CAFE:110::/64
+    permit ipv6 2001:BEBA:CAFE:F110::/64 host 2001:BEBA:CAFE:60::250
+    deny icmp any any echo-request
+    deny icmp any any echo-reply
+    permit ipv6 any any
+    ex
+int f0/0.110
+  ipv6 traffic-filter ipv6-adm-filial in
+  exi  
 
 end
 wr
